@@ -4,9 +4,8 @@ import os
 import time
 
 
-def instalock(agent, language, window):
+def instalock(agent, language, window, scaling):
     # select agent
-    scaling = 1
     image_agent = os.getcwd() + "\\assets\\" + agent + ".png"
     image_lock = os.getcwd() + "\\lock\\" + "lock_" + language + ".png"
     while True:

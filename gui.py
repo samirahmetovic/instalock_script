@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 from instalock import instalock
 from get_agents import get_agent_list
+from check_scaling import check_scaling
 import threading
 
 agents = get_agent_list()
@@ -11,7 +12,7 @@ layout = [
     [sg.Button("start", key="start"), sg.Text(key="status")],
     [sg.Text("__________________________________")],
     [sg.Text("Advanced:")],
-    [sg.Text("scaling"), sg.Input("1.0", size=(5, 5))]
+    [sg.Text("scaling"), sg.Input("1.0", size=(5, 5), key="scaling")]
 ]
 
 # Create the Window
@@ -23,7 +24,8 @@ while True:
         break
 
     if event == 'start':
-        x = threading.Thread(target=instalock, args=(values['agent_selection'], "en", window["status"]))
+        scaling = check_scaling(values["scaling"])
+        x = threading.Thread(target=instalock, args=(values['agent_selection'], "en", window["status"], scaling))
         x.start()
         window["status"].update("waiting for Agent select...")
 
